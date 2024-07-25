@@ -1,0 +1,517 @@
+import React, { useState } from 'react'
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import Checkbox from '@mui/material/Checkbox';
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import NavigationIcon from '@mui/icons-material/Navigation';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import Rating from '@mui/material/Rating';
+import Typography from '@mui/material/Typography';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Stack from '@mui/material/Stack';
+import Slider from '@mui/material/Slider';
+import VolumeDown from '@mui/icons-material/VolumeDown';
+import VolumeUp from '@mui/icons-material/VolumeUp';
+import Switch from '@mui/material/Switch';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Alert from '@mui/material/Alert';
+
+import { styled, alpha } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import InputBase from '@mui/material/InputBase';
+import Badge from '@mui/material/Badge';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MailIcon from '@mui/icons-material/Mail';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import Link from '@mui/material/Link';
+
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
+import SaveIcon from '@mui/icons-material/Save';
+import PrintIcon from '@mui/icons-material/Print';
+import ShareIcon from '@mui/icons-material/Share';
+
+const App = () => {
+
+  const actions = [
+    { icon: <FileCopyIcon />, name: 'Copy' },
+    { icon: <SaveIcon />, name: 'Save' },
+    { icon: <PrintIcon />, name: 'Print' },
+    { icon: <ShareIcon />, name: 'Share' },
+  ];
+
+  const Films = [
+    { label: 'The Shawshank Redemption', year: 1994 },
+    { label: 'The Godfather', year: 1972 },
+    { label: 'The Godfather: Part II', year: 1974 },
+    { label: 'The Dark Knight', year: 2008 },
+    { label: '12 Angry Men', year: 1957 },
+    { label: "Schindler's List", year: 1993 },
+    { label: 'Pulp Fiction', year: 1994 },
+  ];
+
+  const label = {};
+  const [value, setValue] = React.useState(30);
+
+  const [age, setAge] = React.useState('');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
+  function createData(name, calories, fat, carbs, protein) {
+    return { name, calories, fat, carbs, protein };
+  }
+
+  const rows = [
+    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    createData('Eclair', 262, 16.0, 24, 6.0),
+    createData('Cupcake', 305, 3.7, 67, 4.3),
+    createData('Gingerbread', 356, 16.0, 49, 3.9),
+  ];
+
+
+
+
+
+  const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+      width: 'auto',
+    },
+  }));
+
+  const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }));
+
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('md')]: {
+        width: '20ch',
+      },
+    },
+  }));
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const menuId = 'primary-search-account-menu';
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+    </Menu>
+  );
+
+  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+          <Badge badgeContent={4} color="error">
+            <MailIcon />
+          </Badge>
+        </IconButton>
+        <p>Messages</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
+          <Badge badgeContent={17} color="error">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>
+    </Menu>
+  );
+
+  const preventDefault = (event) => event.preventDefault();
+
+
+  return (
+    <div>
+
+      <div>
+        <Box sx={{ flexGrow: 1 }}>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="open drawer"
+                sx={{ mr: 2 }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ display: { xs: 'none', sm: 'block' } }}
+              >
+                MUI
+              </Typography>
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Search…"
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+              </Search>
+              <Box sx={{ flexGrow: 1 }} />
+              <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                  <Badge badgeContent={4} color="error">
+                    <MailIcon />
+                  </Badge>
+                </IconButton>
+                <IconButton
+                  size="large"
+                  aria-label="show 17 new notifications"
+                  color="inherit"
+                >
+                  <Badge badgeContent={17} color="error">
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+              </Box>
+              <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                <IconButton
+                  size="large"
+                  aria-label="show more"
+                  aria-controls={mobileMenuId}
+                  aria-haspopup="true"
+                  onClick={handleMobileMenuOpen}
+                  color="inherit"
+                >
+                  <MoreIcon />
+                </IconButton>
+              </Box>
+            </Toolbar>
+          </AppBar>
+          {renderMobileMenu}
+          {renderMenu}
+        </Box>
+      </div>
+
+
+      <div>
+        <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}>
+          <SpeedDial
+            ariaLabel="SpeedDial basic example"
+            sx={{ position: 'absolute', bottom: 16, right: 16 }}
+            icon={<SpeedDialIcon />}
+          >
+            {actions.map((action) => (
+              <SpeedDialAction
+                key={action.name}
+                icon={action.icon}
+                tooltipTitle={action.name}
+              />
+            ))}
+          </SpeedDial>
+        </Box>
+      </div>
+
+      <Box
+        sx={{
+          typography: 'body1',
+          '& > :not(style) ~ :not(style)': {
+            ml: 2,
+          },
+        }}
+        onClick={preventDefault}
+      >
+        <Link href="#">Link</Link>
+        <Link href="#" color="inherit">
+          {'color="inherit"'}
+        </Link>
+        <Link href="#" variant="body2">
+          {'variant="body2"'}
+        </Link>
+      </Box>
+
+
+
+      <div>
+        <Stack sx={{ width: '100%' }} spacing={2}>
+          <Alert severity="success">This is a success Alert.</Alert>
+          <Alert severity="info">This is an info Alert.</Alert>
+          <Alert severity="warning">This is a warning Alert.</Alert>
+          <Alert severity="error">This is an error Alert.</Alert>
+        </Stack>
+      </div>
+      <div>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Dessert (100g serving)</TableCell>
+                <TableCell align="right">Calories</TableCell>
+                <TableCell align="right">Fat&nbsp;(g)</TableCell>
+                <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+                <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <TableRow
+                  key={row.name}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell>
+                  <TableCell align="right">{row.calories}</TableCell>
+                  <TableCell align="right">{row.fat}</TableCell>
+                  <TableCell align="right">{row.carbs}</TableCell>
+                  <TableCell align="right">{row.protein}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <div>
+          <Switch {...label} defaultChecked />
+          <Switch {...label} />
+          <Switch {...label} disabled defaultChecked />
+          <Switch {...label} disabled />
+        </div>
+      </div>
+
+      <div>
+        <Box sx={{ width: 200 }}>
+          <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+            <VolumeDown />
+            <Slider aria-label="Volume" value={value} onChange={handleChange} />
+            <VolumeUp />
+          </Stack>
+          <Slider disabled defaultValue={30} aria-label="Disabled slider" />
+        </Box>
+        );
+      </div>
+      <div>
+        <Box sx={{ minWidth: 120 }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Age</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={age}
+              label="Age"
+              onChange={handleChange}
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      </div>
+
+      <div>
+        <Box
+          sx={{
+            '& > legend': { mt: 2 },
+          }}
+        >
+          <Typography component="legend">Controlled</Typography>
+          <Rating
+            name="simple-controlled"
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          />
+          <Typography component="legend">Read only</Typography>
+          <Rating name="read-only" value={value} readOnly />
+          <Typography component="legend">Disabled</Typography>
+          <Rating name="disabled" value={value} disabled />
+          <Typography component="legend">No rating given</Typography>
+          <Rating name="no-value" value={null} />
+        </Box>
+      </div>
+      <div>
+        <FormControl>
+          <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+          <RadioGroup
+            aria-labelledby="demo-radio-buttons-group-label"
+            defaultValue="female"
+            name="radio-buttons-group"
+          >
+            <FormControlLabel value="female" control={<Radio />} label="Female" />
+            <FormControlLabel value="male" control={<Radio />} label="Male" />
+            <FormControlLabel value="other" control={<Radio />} label="Other" />
+          </RadioGroup>
+        </FormControl>
+      </div>
+      <div>
+        <Checkbox {...label} defaultChecked />
+        <Checkbox {...label} />
+        <Checkbox {...label} disabled />
+        <Checkbox {...label} disabled checked />
+      </div>
+
+      <div>
+        <Box sx={{ '& > :not(style)': { m: 1 } }}>
+          <Fab color="primary" aria-label="add">
+            <AddIcon />
+          </Fab>
+          <Fab color="secondary" aria-label="edit">
+            <EditIcon />
+          </Fab>
+          <Fab variant="extended">
+            <NavigationIcon sx={{ mr: 1 }} />
+            Navigate
+          </Fab>
+          <Fab aria-label="like">
+            <FavoriteIcon />
+          </Fab>
+        </Box>
+      </div>
+
+      <Autocomplete
+        disablePortal
+        id="combo-box-demo"
+        options={Films}
+        sx={{ width: 300 }}
+        renderInput={(params) => <TextField {...params} label="Movie" />}
+      />
+
+      <Button variant="text">Text</Button>
+      <Button variant="contained">Contained</Button>
+      <Button variant="outlined">Outlined</Button>
+      <Button>Primary</Button>
+      <Button disabled>Disabled</Button>
+      <Button href="#text-buttons">Link</Button>
+    </div>
+  )
+}
+
+export default App
